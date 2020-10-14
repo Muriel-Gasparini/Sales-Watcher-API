@@ -63,6 +63,8 @@ router.delete('/user/:id', permission.user, userController.delete)
 
 router.get('/user/:id?', permission.user, userController.list)
 
+router.put('/user/:id', permission.user, userController.edit)
+
 
 // Storage
 

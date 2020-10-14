@@ -83,3 +83,56 @@ exports.list = async (req, res) => {
         return res.status(400).json({ error: 'An error occurred while listing users, make sure the ID is correct.' })        
     }
 }
+
+exports.edit = async (req, res) => {
+
+    const { id } = req.params
+
+    const {
+        name,
+        login,
+        password,
+        allPermissions,
+        createClients,
+        readClients,
+        updateClients,
+        deleteClients,
+        createProducts,
+        readProducts,
+        updateProducts,
+        deleteProducts,
+        createReceipts,
+        readReceipts
+    } = req.body
+
+    try {
+        
+        const user = await User.findById(id).select('+password')
+
+        if(user == null) return res.status(400).json({ error: 'There are no users with this ID'})
+
+        await user.updateOne({
+            name: name || user.name,
+            login: login || user.login,
+            password: password || user.password,
+            allPermissions: allPermissions || user.allPermissions,
+            createClients: createClients || user.createClients,
+            readClients: readClients || user.readClients,
+            updateClients: updateClients || user.updateClients,
+            deleteClients: deleteClients || user.deleteClients,
+            createProducts: createProducts || user.createProducts,
+            readProducts: readProducts || user.readProducts,
+            updateProducts: updateProducts|| user.updateProducts,
+            createReceipts: createReceipts || user.createReceipts,
+            readReceipts: readReceipts || user.readReceipts
+        })
+        
+        const userModified = await User.findById(id)
+
+        return res.status(200).json(userModified)
+
+    } catch (error) {
+       console.log(error)
+        return res.status(500).json({ error: 'An error occurred while editing user data' })
+    }
+}
