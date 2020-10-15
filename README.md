@@ -4,6 +4,6 @@ API for sales management, customer registration, products and generation of rece
 
 ---
 
-**You can see the documentation here**:  in progress...
+**You can see the documentation here**
 
 [https://www.notion.so/Docs-Sales-Watcher-4e7a84c3c28f4b57b27bdf08652bfa4a](https://www.notion.so/Docs-Sales-Watcher-4e7a84c3c28f4b57b27bdf08652bfa4a)
