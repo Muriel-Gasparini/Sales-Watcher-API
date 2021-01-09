@@ -1,4 +1,4 @@
-const Admin = require('../models/Admin')
+const Admin = require('../database/models/Admin')
 
 exports.create = async (req, res) => {
 

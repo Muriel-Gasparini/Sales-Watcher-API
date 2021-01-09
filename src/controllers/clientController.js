@@ -1,4 +1,4 @@
-const Client = require('../models/Client')
+const Client = require('../database/models/Client')
 
 exports.create = async (req, res) => {
 

@@ -18,7 +18,7 @@ const Admin = new mongoose.Schema({
     },
     deleteAdmin: {
         type: Boolean,
-        selected: false,
+        select: false,
         required: true
     },
     hierarchy: {
@@ -34,4 +34,4 @@ Admin.pre('save', async function(next) {
     return next()
 })
 
-module.exports = mongoose.model('Admins', Admin)
+export default mongoose.model('Admins', Admin)

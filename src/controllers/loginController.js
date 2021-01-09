@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 
-const Admin = require('../models/Admin')
-const User = require('../models/User')
+const Admin = require('../database/models/Admin')
+const User = require('../database/models/User')
 
 require('dotenv').config()
 
