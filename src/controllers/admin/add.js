@@ -3,9 +3,9 @@ import bodyValidation from '../../middlewares/bodyValidation/create-admin-accoun
 import env from '../../config/envs'
 
 export default async (req, res) => {
-  const { name, login, password, deleteAdmin, secret } = req.body
-
   try {
+    const { name, login, password, deleteAdmin, secret } = req.body
+    
     const account = {
       name,
       login,
@@ -16,14 +16,16 @@ export default async (req, res) => {
 
     const invalidBodyErrorMessage = await bodyValidation(account)
 
-    if (invalidBodyErrorMessage) return res.status(404).json(invalidBodyErrorMessage)
+    if (invalidBodyErrorMessage) return res.status(400).json(invalidBodyErrorMessage)
 
-    if (secret !== env.createAdminPassword) return res.status(404).json({ error: 'The provided password is invalid' })
+    if (secret !== env.createAdminPassword) return res.status(400).json({ error: 'The provided password is invalid' })
 
-    await AdminRepository.setAdmin(account)
+    const result = await AdminRepository.setAdmin(account)
 
-    res.status(200).json({ message: 'Success on creating admin' })
+    if (result.adminAlreadyExists) return res.status(400).json({ error: 'This admin login already exists' })
+
+    res.status(201).json({ message: 'Success on creating admin' })
   } catch (e) {
-    res.status(404).json({ error: 'Error on creating admin' })
+    res.status(500).json({ error: 'Error on creating admin' })
   }
 }
