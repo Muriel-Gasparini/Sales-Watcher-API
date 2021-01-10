@@ -1,12 +1,12 @@
-import express from 'express'
-import AddAdminController from '../controllers/admin/add'
+import express, { Router } from 'express'
+const router = Router()
 
-const router = express.Router()
+import AddAdminController from '../controllers/admin/add'
+import LoginAdminController from '../controllers/admin/login'
 
 const loginController = require('../controllers/loginController')
 
-
-router.post('/login/admin', loginController.admin)
+router.post('/login/admin', LoginAdminController)
 
 router.post('/login/user', loginController.user)
 
