@@ -1,4 +1,4 @@
-import BodyValidation from '../../utils/bodyValidation/admin/login'
+import BodyValidation from '../../utils/bodyValidation/login'
 import AdminRepository from '../../database/repositories/AdminRepository'
 import Bcrypt from '../../utils/bcrypt'
 import Jwt from '../../utils/jwt'

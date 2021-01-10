@@ -1,7 +1,7 @@
 import UserRepository from '../../database/repositories/UserRepository'
 import Bcrypt from '../../utils/bcrypt'
 import Jwt from '../../utils/jwt'
-import BodyValidation from '../../utils/bodyValidation/user/login'
+import BodyValidation from '../../utils/bodyValidation/login'
 
 export default async (req, res) => {
   try {
