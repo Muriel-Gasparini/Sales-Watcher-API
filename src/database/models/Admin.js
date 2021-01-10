@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const bcryptjs = require('bcryptjs')
+import { Schema, model } from 'mongoose'
+import { hash } from 'bcryptjs'
 
-const Admin = new mongoose.Schema({
+const Admin = new Schema({
     name: {
         type: String,
         default: 'Root',
@@ -29,9 +29,9 @@ const Admin = new mongoose.Schema({
 
 Admin.pre('save', async function(next) {
 
-    this.password = await bcryptjs.hash(this.password, 10)
+    this.password = await hash(this.password, 10)
 
     return next()
 })
 
-export default mongoose.model('Admins', Admin)
+export default model('Admins', Admin)
