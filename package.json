@@ -4,7 +4,7 @@
   "description": "API Rest for sales management.",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Muriel Gasparini",
@@ -20,7 +20,11 @@
     "mongoose": "^5.10.6"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4",
-    "mquery": ">=3.2.3"
+    "mquery": ">=3.2.3",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "nodemon": "^2.0.4"
   }
 }

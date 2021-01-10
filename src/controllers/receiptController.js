@@ -1,7 +1,7 @@
-const Client = require('../models/Client')
-const Product = require('../models/Product')
-const Receipt = require('../models/Receipt')
-const Storage = require('../models/Storage')
+const Client = require('../database/models/Client')
+const Product = require('../database/models/Product')
+const Receipt = require('../database/models/Receipt')
+const Storage = require('../database/models/Storage')
 
 exports.create = async (req, res) => {
 

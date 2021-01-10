@@ -1,10 +1,15 @@
-const express = require('express')
-const router = express.Router()
+import { Router } from 'express'
+const router = Router()
 
-const loginController = require('../controllers/loginController')
+import AddAdminController from '../controllers/admin/create-account'
+import LoginAdminController from '../controllers/admin/login'
+import LoginUserController from '../controllers/user/login'
 
-router.post('/admin', loginController.admin)
+router.post('/login/admin', LoginAdminController)
 
-router.post('/user', loginController.user)
+router.post('/login/user', LoginUserController)
 
-module.exports = app => app.use('/login', router)
+router.post('/admin/account', AddAdminController)
+
+
+module.exports = app => app.use('/', router)

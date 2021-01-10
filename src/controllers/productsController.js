@@ -1,5 +1,5 @@
-const Product = require('../models/Product')
-const Storage = require('../models/Storage')
+const Product = require('../database/models/Product')
+const Storage = require('../database/models/Storage')
 
 exports.create = async (req, res) => {
     

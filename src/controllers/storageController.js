@@ -1,4 +1,4 @@
-const Storage = require('../models/Storage')
+const Storage = require('../database/models/Storage')
 const _ = require('lodash')
 
 exports.createLog = async (req, res) => {
