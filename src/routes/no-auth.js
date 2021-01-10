@@ -1,7 +1,7 @@
-import express, { Router } from 'express'
+import { Router } from 'express'
 const router = Router()
 
-import AddAdminController from '../controllers/admin/add'
+import AddAdminController from '../controllers/admin/create-account'
 import LoginAdminController from '../controllers/admin/login'
 
 const loginController = require('../controllers/loginController')
