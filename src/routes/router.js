@@ -1,4 +1,4 @@
-const express = require('express')
+import { Router } from 'express'
 
 const clientController = require('../controllers/clientController')
 const productController = require('../controllers/productsController')
@@ -9,11 +9,15 @@ const storageController = require('../controllers/storageController')
 
 const inputValidation = require('../middlewares/inputValidation')
 const permission = require('../middlewares/permission')
-const authMiddleware = require('../middlewares/auth')
 
-const router = express.Router()
+import AuthenticationMiddlware from '../middlewares/auth'
+import Permission from '../middlewares/permission'
 
-router.use(authMiddleware)
+import AdminController from '../controllers/admin/crud'
+
+const router = Router()
+
+router.use(AuthenticationMiddlware)
 
 //Clients
 
@@ -48,11 +52,11 @@ router.delete('/receipt/:id', permission.receipt, receiptController.delete)
 
 // Admins
 
-router.post('/admin', permission.admin, adminController.create)
+router.post('/admin', Permission.adminAcess, AdminController.postAdmin)
 
 router.delete('/admin/:id', permission.admin, adminController.delete)
 
-router.get('/admin/:id?', permission.admin, adminController.list)
+router.get('/admin/:id?', Permission.adminAcess, AdminController.getAdmin)
 
 
 // Users
