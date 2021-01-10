@@ -1,11 +1,11 @@
 import AdminRepository from '../../database/repositories/AdminRepository'
-import bodyValidation from '../../middlewares/bodyValidation/create-admin-account'
+import bodyValidation from '../../utils/bodyValidation/admin/create-account'
 import env from '../../config/envs'
 
 export default async (req, res) => {
   try {
     const { name, login, password, deleteAdmin, secret } = req.body
-    
+
     const account = {
       name,
       login,
