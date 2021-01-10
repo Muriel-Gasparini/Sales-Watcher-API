@@ -19,7 +19,7 @@ export default async (req, res) => {
 
     if (!match) return res.status(400).json({ error: 'Invalid Credentials' })
 
-    const token = Jwt.generateToken({ id: user.account.id })
+    const token = Jwt.generateToken({ accountId: user.account.id })
 
     res.status(200).json({ accountId: user.account.id, token })
   } catch (error) {

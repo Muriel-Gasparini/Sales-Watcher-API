@@ -19,7 +19,7 @@ export default async (req, res) => {
 
     if (resultComparePassword.incorrectPassword) return res.status(400).json({ error: 'Incorrect credentials, try again.' })
 
-    const token = Jwt.generateToken({ id: admin.account.id })
+    const token = Jwt.generateToken({ accountId: admin.account.id })
 
     return res.status(200).json({ accountId: admin.account.id, token })
   } catch (e) {
