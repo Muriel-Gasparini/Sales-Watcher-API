@@ -34,4 +34,21 @@ export default class {
       res.status(500).json({ error: 'An error occurred while creating the administrator' })
     }
   }
+
+  static async deleteAdmin(req, res) {  
+    try {
+      const { account } = await AdminRepository.getAdmin({ queryParams: { _id: req.accountId }})
+
+      if (!account[0].deleteAdmin) return res.status(401).json({ error: 'You have not been authorized to delete administrators' })
+  
+      const { IsAlreadyDeleted } = await AdminRepository.deleteAdminById(req.params.id)
+
+      if (IsAlreadyDeleted) return res.status(400).json({ error: 'This account already been deleted' })
+
+      res.status(200).json({ message: 'The administrator was successfully deleted' })
+    } catch (error) {
+      console.log(error)
+      res.status(500).json(error)
+    }
+  }
 }

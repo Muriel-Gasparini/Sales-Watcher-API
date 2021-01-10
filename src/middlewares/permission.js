@@ -159,6 +159,8 @@ async function getLoggedAccount(requestData) {
     UserRepository.getUser({ queryParams: { _id } }),
     AdminRepository.getAdmin({ queryParams: { _id } })
   ])
+  
+  if (userAccount.accountNotFound && adminAccount.accountNotFound) throw new Error('Error while get admin and user account')
 
   const loggedAccount = userAccount.accountNotFound ? adminAccount.account[0] : userAccount.account[0]
 
@@ -170,7 +172,7 @@ export default class {
   static async adminAcess(req, res, next) {
     try {
       const loggedAccount = await getLoggedAccount(req)
-
+      console.log(loggedAccount, loggedAccount.hierarchy !== 'admin')
       if (loggedAccount.hierarchy !== 'admin') return res.status(401).json({ error: "You are not allowed to access this route, only administrators" })
 
       return next()
