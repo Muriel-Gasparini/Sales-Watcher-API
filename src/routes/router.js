@@ -54,7 +54,7 @@ router.delete('/receipt/:id', permission.receipt, receiptController.delete)
 
 router.post('/admin', Permission.adminAcess, AdminController.postAdmin)
 
-router.delete('/admin/:id', permission.admin, adminController.delete)
+router.delete('/admin/:id', Permission.adminAcess, AdminController.deleteAdmin)
 
 router.get('/admin/:id?', Permission.adminAcess, AdminController.getAdmin)
 
