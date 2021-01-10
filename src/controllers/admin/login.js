@@ -21,7 +21,7 @@ export default async (req, res) => {
 
     const token = Jwt.generateToken({ id: admin.account.id })
 
-    return res.status(200).json({ userID: admin.account.id, token: `Bearer ${token}` })
+    return res.status(200).json({ accountId: admin.account.id, token: `Bearer ${token}` })
   } catch (e) {
     return res.status(500).json({ error: 'An error occurred while logging in' })
   }
