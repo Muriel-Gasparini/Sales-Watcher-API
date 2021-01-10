@@ -18,7 +18,6 @@ const Admin = new Schema({
     },
     deleteAdmin: {
         type: Boolean,
-        select: false,
         required: true
     },
     hierarchy: {
