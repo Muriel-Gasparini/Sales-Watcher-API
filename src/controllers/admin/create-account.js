@@ -4,28 +4,19 @@ import env from '../../config/envs'
 
 export default async (req, res) => {
   try {
-    const { name, login, password, deleteAdmin, secret } = req.body
+    const { isValidBody, jsonError } = await bodyValidation(req.body, true)
 
-    const account = {
-      name,
-      login,
-      password,
-      deleteAdmin,
-      secret
-    }
+    if (!isValidBody) return res.status(400).json({ jsonError })
 
-    const invalidBodyErrorMessage = await bodyValidation(account)
+    if (req.body.secret !== env.createAdminPassword) return res.status(400).json({ error: 'The provided password is invalid' })
 
-    if (invalidBodyErrorMessage) return res.status(400).json(invalidBodyErrorMessage)
+    const { adminAlreadyExists, account, message } = await AdminRepository.setAdmin(req.body)
 
-    if (secret !== env.createAdminPassword) return res.status(400).json({ error: 'The provided password is invalid' })
+    if (adminAlreadyExists) return res.status(400).json({ error: message })
 
-    const result = await AdminRepository.setAdmin(account)
-
-    if (result.adminAlreadyExists) return res.status(400).json({ error: 'This admin login already exists' })
-
-    res.status(201).json({ message: 'Success on creating admin' })
+    res.status(201).json(account)
   } catch (e) {
+    console.log(e)
     res.status(500).json({ error: 'Error on creating admin' })
   }
 }
