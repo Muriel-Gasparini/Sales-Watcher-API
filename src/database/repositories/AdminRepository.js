@@ -2,39 +2,39 @@ import Admin from '../models/Admin'
 
 class AdminRepository {
 
-  static async setAdmin (admin) {
+  static async setAdmin(account) {
     try {
-      const adminRequested = await this.getAdmin({ queryParams: { login: admin.login } })
+      const adminRequested = await this.getAdmin({ queryParams: { login: account.login } })
 
-      if (!adminRequested.accountNotFound) return { adminAlreadyExists: true }
+      if (!adminRequested.accountNotFound) return { adminAlreadyExists: true, message: 'This account already exists' }
 
-      await Admin.create(admin)
+      await Admin.create(account)
 
-      return { adminAlreadyExists: false , message: 'Success to create admin account' }
+      return { adminAlreadyExists: false, message: 'Success to create admin account' }
     } catch (e) {
+      console.log(e)
       throw new Error('Error while creating admin')
     }
   }
 
-  static async getAdmin (searchParams = { queryParams: null, getPassword: null }) {
+  static async getAdmin(searchParams = { queryParams: null, getPassword: null }) {
     try {
-      let account =  searchParams.getPassword ? await Admin.find(searchParams.queryParams || null).select('+password') : await Admin.find(searchParams.queryParams || null)
+      const searchedAccounts = searchParams.getPassword ? await Admin.find(searchParams.queryParams || null).select('+password') : await Admin.find(searchParams.queryParams || null)
 
-      if (account.length < 1) return { accountNotFound: true }
+      if (searchedAccounts.length < 1) return { accountNotFound: true }
 
-      account = account[0]
+      const account = searchedAccounts.map(account => {
+        const { _id, __v, password, ...accountWithoutIdAndPassword } = account._doc
 
-      account = {
-        id: account._id,
-        name: account.name,
-        login: account.login,
-        password: searchParams.getPassword ? account.password : null,
-        deleteAdmin: account.deleteAdmin
-      }
+        return Object.assign(
+          { id: _id, password: searchParams.getPassword ? password : null },
+          accountWithoutIdAndPassword
+        )
+      })
 
       return { accountNotFound: false, account }
     } catch (e) {
-      throw new Error('Error while get admin')     
+      throw new Error('Error while get admin')
     }
   }
 }
