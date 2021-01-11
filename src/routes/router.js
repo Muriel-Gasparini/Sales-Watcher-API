@@ -3,7 +3,6 @@ import { Router } from 'express'
 const clientController = require('../controllers/clientController')
 const productController = require('../controllers/productsController')
 const receiptController = require('../controllers/receiptController')
-const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const storageController = require('../controllers/storageController')
 
@@ -12,8 +11,8 @@ const permission = require('../middlewares/permission')
 
 import AuthenticationMiddlware from '../middlewares/auth'
 import Access from '../middlewares/acessHierarchy/permissions'
-import UserPermission from '../middlewares/permission/user'
 
+import UserController from '../controllers/user/crud'
 import AdminController from '../controllers/admin/crud'
 
 const router = Router()
@@ -62,7 +61,7 @@ router.get('/admin/:id?', Access.onlyAdminAccounts, AdminController.getAdmin)
 
 // Users
 
-router.post('/user', Access.onlyAdminAccounts, UserPermission)
+router.post('/user', Access.onlyAdminAccounts, UserController.postUser)
 
 router.delete('/user/:id', permission.user, userController.delete)
 

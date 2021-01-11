@@ -21,7 +21,7 @@ export default (account) => {
   
   const { error } = schema.validate(account)
   
-  if (error) return { jsonError: error.message.replace(/"+/g, '') }
+  if (error) return { jsonError: error.message.replace(/"+/g, ''), isValidBody: false }
 
-  return null
+  return { isValidBody: true }
 }

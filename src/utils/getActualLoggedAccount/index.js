@@ -1,3 +1,6 @@
+import UserRepository from '../../database/repositories/UserRepository'
+import AdminRepository from '../../database/repositories/AdminRepository'
+
 export default async (req) => {
   const _id = req.accountId
 
