@@ -11,7 +11,8 @@ const inputValidation = require('../middlewares/inputValidation')
 const permission = require('../middlewares/permission')
 
 import AuthenticationMiddlware from '../middlewares/auth'
-import Permission from '../middlewares/permission'
+import Access from '../middlewares/acessHierarchy/permissions'
+import UserPermission from '../middlewares/permission/user'
 
 import AdminController from '../controllers/admin/crud'
 
@@ -52,16 +53,16 @@ router.delete('/receipt/:id', permission.receipt, receiptController.delete)
 
 // Admins
 
-router.post('/admin', Permission.adminAcess, AdminController.postAdmin)
+router.post('/admin', Access.onlyAdminAccounts, AdminController.postAdmin)
 
-router.delete('/admin/:id', Permission.adminAcess, AdminController.deleteAdmin)
+router.delete('/admin/:id', Access.onlyAdminAccounts, AdminController.deleteAdmin)
 
-router.get('/admin/:id?', Permission.adminAcess, AdminController.getAdmin)
+router.get('/admin/:id?', Access.onlyAdminAccounts, AdminController.getAdmin)
 
 
 // Users
 
-router.post('/user', permission.user, userController.create)
+router.post('/user', Access.onlyAdminAccounts, UserPermission)
 
 router.delete('/user/:id', permission.user, userController.delete)
 
