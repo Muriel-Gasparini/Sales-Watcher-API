@@ -24,7 +24,7 @@ export default class {
 
   static async setUser(account) {
     try {
-      const { accountNotFound } = await this.getUser({ queryParams: { _id: account.id } })
+      const { accountNotFound } = await this.getUser({ queryParams: { login: account.login } })
 
       if (!accountNotFound) return { userAlreadyExists: true, message: 'This account already exists' }
 
