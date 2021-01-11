@@ -21,4 +21,23 @@ export default class {
       throw new Error('Error while get user')
     }
   }
+
+  static async setUser(account) {
+    try {
+      const { accountNotFound } = await this.getUser({ queryParams: { _id: account.id } })
+
+      if (!accountNotFound) return { userAlreadyExists: true, message: 'This account already exists' }
+
+      const user = await User.create(account)
+
+      const { _id, __v, ...userWithoutId } = user._doc
+
+      return {
+        userAlreadyExists: false,
+        account: Object.assign({ id: _id }, userWithoutId)
+      }
+    } catch (e) {
+      throw new Error('An error ocurred while creating user')
+    }
+  }
 }
