@@ -4,9 +4,9 @@ class AdminRepository {
 
   static async setAdmin(account) {
     try {
-      const adminRequested = await this.getAdmin({ queryParams: { login: account.login } })
+      const { accountNotFound } = await this.getAdmin({ queryParams: { login: account.login } })
 
-      if (!adminRequested.accountNotFound) return { adminAlreadyExists: true, message: 'This account already exists' }
+      if (!accountNotFound) return { adminAlreadyExists: true, message: 'This account already exists' }
 
       const admin = await Admin.create(account)
 
@@ -19,7 +19,6 @@ class AdminRepository {
         accountWithoutIdAndPassword
       )}
     } catch (e) {
-      console.log(e)
       throw new Error('Error while creating admin')
     }
   }
